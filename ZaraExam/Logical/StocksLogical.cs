@@ -16,12 +16,14 @@ namespace ZaraExam.Logical
         /// <param name="month"></param>
         /// <param name="day"></param>
         /// <returns></returns>
-        public DateTime LastDayOfMonth(int year, int month, DayOfWeek day)
+        public DateTime LastDayOfMonthBy(int year, int month, DayOfWeek day)
         {
             DateTime lastDay = new DateTime(year, month, DateTime.DaysInMonth(year, month));
             while (lastDay.DayOfWeek != day)
                 lastDay = lastDay.AddDays(-1);
             return lastDay;
         }
+
+
     }
 }
