@@ -11,15 +11,44 @@ namespace ZaraExam.Logical.Tests
     [TestClass()]
     public class StocksLogicalTests
     {
+        StocksLogical stocks;
+        public StocksLogicalTests()
+        {
+            stocks = new StocksLogical();
+        }
         [TestMethod()]
-        [DataRow(2015,04,DayOfWeek.Thursday)]
+        [DataRow(2001, 05, DayOfWeek.Thursday)]
         public void LastDayOfMonthTest(int year, int month, DayOfWeek day)
         {
             DateTime expected = Convert.ToDateTime("30/04/2015");
-            StocksLogical stocks = new StocksLogical();
-            DateTime checkDate = stocks.LastDayOfMonth(year, month, day);
+            DateTime checkDate = stocks.LastDayOfMonthBy(year, month, day);
+            bool b = false;
+            int count = 0;
+            DateTime date;
+
+            while(!b)
+            {
+                date = stocks.LastDayOfMonthBy(year, month, DayOfWeek.Thursday).AddDays(1);
+                if (date == Convert.ToDateTime("28/12/2017") || 
+                    stocks.LastDayOfMonthBy(year, month, DayOfWeek.Thursday) == Convert.ToDateTime("28/12/2017"))
+                {
+                    b = true;
+                }
+                if (date.DayOfWeek == DayOfWeek.Friday)
+                {
+                    count++;
+                }                
+                month++;
+                if(month == 13)
+                {
+                    month = 1;
+                    year++;
+                }
+            }
+            Console.Write(count);
             Assert.AreEqual(checkDate, expected);
 
         }
+
     }
 }

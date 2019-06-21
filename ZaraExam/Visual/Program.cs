@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System;
+using ZaraExam.Logical;
 
 namespace ZaraExam.Visual
 {
@@ -10,6 +8,9 @@ namespace ZaraExam.Visual
     {
         static void Main(string[] args)
         {
+            StocksLogical logical = new StocksLogical();
+            logical.Method(Convert.ToDateTime("01/05/2001"), Convert.ToDateTime("28/12/2017"), System.DayOfWeek.Thursday);
+            Console.ReadLine();
         }
     }
 }
