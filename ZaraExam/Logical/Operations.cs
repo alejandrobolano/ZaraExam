@@ -40,11 +40,19 @@ namespace ZaraExam.Logical
             return action;
         }
 
+        /// <summary>
+        /// Total earn
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="finish"></param>
+        /// <param name="day"></param>
+        /// <param name="input"></param>
+        /// <param name="broken"></param>
+        /// <returns></returns>
         public decimal TotalEarnings(DateTime start, DateTime finish, DayOfWeek day, float input, float broken)
         {
             var actions = GetTotalActionsMath(start, finish, day, input, broken);
             var lastStock = FileDao.GetStocks().Where(x => x.Date == finish).FirstOrDefault();
-            //var lastStock = FileDao.GetStocks().FirstOrDefault();
             return actions * lastStock.Closing;
         }
     }

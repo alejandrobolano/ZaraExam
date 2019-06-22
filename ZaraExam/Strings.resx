@@ -129,6 +129,9 @@
   <data name="error_read" xml:space="preserve">
     <value>Error to read file</value>
   </data>
+  <data name="file_succesfull" xml:space="preserve">
+    <value>File read succesfull</value>
+  </data>
   <data name="loading" xml:space="preserve">
     <value>Loading...</value>
   </data>

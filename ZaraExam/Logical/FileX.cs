@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using ZaraExam.Model;
@@ -11,6 +13,16 @@ namespace ZaraExam.Logical
 {
     class FileX
     {
+        private static readonly log4net.ILog LOG = log4net.LogManager.GetLogger
+        (MethodBase.GetCurrentMethod().DeclaringType);
+        private ResourceManager rm;
+
+        public FileX()
+        {
+            Assembly a = Assembly.Load("ZaraExam");
+            rm = new ResourceManager("ZaraExam.Strings", a);
+        }
+
         /// <summary>
         /// Get all stocks of file
         /// </summary>
@@ -26,20 +38,21 @@ namespace ZaraExam.Logical
                 {
                     stocks.Add(Helper.ConvertStringToStock(item));
                 }
+                LOG.Info(rm.GetString("file_succesfull"));
             }
             catch (FileLoadException f)
             {
-                Console.WriteLine(f.Message);
+                LOG.Error(f.Message);
                 throw;
             }
             catch(AccessViolationException a)
             {
-                Console.WriteLine(a.Message);
+                LOG.Error(a.Message);
                 throw;
             }
             catch(FileNotFoundException f)
             {
-                Console.WriteLine(f.Message);
+                LOG.Error(f.Message);
                 throw;
             }
             

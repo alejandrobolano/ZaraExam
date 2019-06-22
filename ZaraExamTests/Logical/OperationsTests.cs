@@ -19,7 +19,7 @@ namespace ZaraExam.Logical.Tests
 
         [TestMethod()]
         [DataRow("01/05/2001", "28/12/2017", DayOfWeek.Thursday)]
-        public void GetTotalActionsMathTest(string start, string finish, DayOfWeek day)
+        public void TotalEarningsTest(string start, string finish, DayOfWeek day)
         {
             var result = operations.TotalEarnings(Convert.ToDateTime(start), Convert.ToDateTime(finish),
                 day, 50f, 0.02f);
@@ -27,5 +27,6 @@ namespace ZaraExam.Logical.Tests
             Assert.IsTrue(result > 0);
         }
 
+      
     }
 }

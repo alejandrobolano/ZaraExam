@@ -15,3 +15,56 @@
         {
             w.WriteLine("{0}", message);
         }
+
+ /// <summary>
+        /// Method without use
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="finish"></param>
+        /// <param name="day"></param>
+        public void Method(DateTime start, DateTime finish, DayOfWeek day)
+        {
+            bool b = false;
+            DateTime dateNext;
+            int year = start.Year;
+            int month = start.Month;
+            var stocks = FileDao.GetStocks();
+            stocks.Reverse();
+
+            while (!b)
+            {
+                dateNext = GetLastDayOfMonthBy(year, month, day).AddDays(1);
+                if (dateNext == finish ||
+                    GetLastDayOfMonthBy(year, month, day) == finish)
+                {
+                    b = true;
+                }
+
+                bool a = false;
+                while (!a)
+                {
+                    dateNext = GetLastDayOfMonthBy(year, month, day).AddDays(1);
+                    if (dateNext == finish ||
+                        GetLastDayOfMonthBy(year, month, day) == finish)
+                    {
+                        b = true;
+                        a = true;
+                    }
+                    //En caso de que esté pues tomar el valor de apertura, que ahora no se como usarlo
+                    var stock = stocks.Where(x => x.Date == dateNext).FirstOrDefault();
+                    if (stock != null)
+                    {
+                        Console.WriteLine(stock.Date.ToShortDateString());
+                        Console.WriteLine(Convert.ToString(stock.Opening));
+                        a = true;
+                    }
+                }
+
+                month++;
+                if (month == 13)
+                {
+                    month = 1;
+                    year++;
+                }
+            }
+        }

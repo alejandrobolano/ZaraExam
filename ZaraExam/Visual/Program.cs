@@ -41,7 +41,7 @@ namespace ZaraExam.Visual
             Console.WriteLine();
             Console.WriteLine(rm.GetString("earn_total") +
                 operations.TotalEarnings(start, finish, day, input, broker));
-            LOG.InfoFormat("Application completed in {0}ms", timer.ElapsedMilliseconds);
+            LOG.WarnFormat("Application completed in {0}ms", timer.ElapsedMilliseconds);
             Console.ReadKey();
         }
 

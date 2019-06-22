@@ -97,6 +97,15 @@ namespace ZaraExam {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a File read succesfull.
+        /// </summary>
+        internal static string file_succesfull {
+            get {
+                return ResourceManager.GetString("file_succesfull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Loading....
         /// </summary>
         internal static string loading {
