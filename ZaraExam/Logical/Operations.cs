@@ -37,7 +37,7 @@ namespace ZaraExam.Logical
                 temp = Convert.ToDecimal(input) / item.Opening;
                 action += temp - (temp * Convert.ToDecimal(broken));
             }
-            return action;
+            return decimal.Round(action,3);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace ZaraExam.Logical
         {
             var actions = GetTotalActionsMath(start, finish, day, input, broken);
             var lastStock = FileDao.GetStocks().Where(x => x.Date == finish).FirstOrDefault();
-            return actions * lastStock.Closing;
+            return decimal.Round(actions * lastStock.Closing,3);
         }
     }
 }
