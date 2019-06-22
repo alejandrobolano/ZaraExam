@@ -49,14 +49,5 @@ namespace ZaraExam.Logical.Tests
 
         }
 
-        [TestMethod()]
-        [DataRow("01/05/2001", "28/12/2017", DayOfWeek.Thursday)]
-        public void MathCalculationTest(string start, string finish, DayOfWeek day)
-        {
-            var result = stocks.GetTotalActionsMath(Convert.ToDateTime(start), Convert.ToDateTime(finish),
-                day, 50f, 0.02f);
-            Console.WriteLine(result);
-            Assert.IsTrue(result>0);
-        }
     }
 }

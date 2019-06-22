@@ -19,6 +19,7 @@ namespace ZaraExam.Logical
         {
             file = FileDao.Instance;
         }
+
         /// <summary>
         /// Obtain last day of month ----------
         /// For this exam is DayOfWeek.Thursday
@@ -34,29 +35,20 @@ namespace ZaraExam.Logical
                 lastDay = lastDay.AddDays(-1);
             return lastDay;
         }
-        /// <summary>
-        /// Get all stocks of file
-        /// </summary>
-        /// <returns></returns>
-        public List<Stock> GetStocks()
-        {
-            List<string> lines = File.ReadLines(Helper.FILEPATH).ToList();
-            List<Stock> stocks = new List<Stock>();
-            lines.RemoveAt(0);
-            foreach (var item in lines)
-            {
-                stocks.Add(Helper.ConvertStringToStock(item));
-            }
-            return stocks;
-        }
 
+        /// <summary>
+        /// Method without use
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="finish"></param>
+        /// <param name="day"></param>
         public void Method(DateTime start, DateTime finish, DayOfWeek day)
         {
             bool b = false;
             DateTime dateNext;
             int year = start.Year;
             int month = start.Month;
-            var stocks = GetStocks();
+            var stocks = FileDao.GetStocks();
 
             //Reverse to list of stocks
             stocks.Reverse();
@@ -99,6 +91,13 @@ namespace ZaraExam.Logical
             }
         }
 
+        /// <summary>
+        /// GetLastDayOfMonthList
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="finish"></param>
+        /// <param name="day"></param>
+        /// <returns></returns>
         public List<DateTime> GetLastDayOfMonthList(DateTime start, DateTime finish, DayOfWeek day)
         {
             var selectedDates = new List<DateTime>();
@@ -125,7 +124,7 @@ namespace ZaraExam.Logical
         public List<Stock> GetStockByQuotation(DateTime start, DateTime finish, DayOfWeek day)
         {
             List<Stock> stocksReduced = new List<Stock>();
-            var stocks = FileDao.GetStocks(); 
+            var stocks = FileDao.GetStocks();
 
             DateTime dateNext;
             var listLastDays = GetLastDayOfMonthList(start, finish, day);
@@ -134,9 +133,9 @@ namespace ZaraExam.Logical
             {
                 var stock = new Stock();
                 dateNext = item.AddDays(1);
-                
+
                 while (true)
-                {                    
+                {
                     stock = stocks.Where(x => x.Date == dateNext).FirstOrDefault();
                     if (stock != null)
                     {
@@ -147,7 +146,7 @@ namespace ZaraExam.Logical
                     {
                         dateNext = dateNext.AddDays(1);
                     }
-                }                
+                }
             }
             return stocksReduced;
         }

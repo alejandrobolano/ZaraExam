@@ -7,22 +7,45 @@ using ZaraExam.Dao;
 
 namespace ZaraExam.Logical
 {
-    class Operations
+    public class Operations
     {
-        FileDao excelDao = FileDao.Instance;
+        StocksLogical logical;
+        FileDao file;
+        public Operations()
+        {
+            logical = new StocksLogical();
+            file = FileDao.Instance;
+        }
 
-        public decimal GetTotalActionsMath(DateTime start, DateTime finish, DayOfWeek day, float input, float broken)
+        /// <summary>
+        /// Get total of actions GetTotalActionsMath
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="finish"></param>
+        /// <param name="day"></param>
+        /// <param name="input"></param>
+        /// <param name="broken"></param>
+        /// <returns></returns>
+        private decimal GetTotalActionsMath(DateTime start, DateTime finish, DayOfWeek day, float input, float broken)
         {
             decimal action = 0;
             decimal temp = 0;
             
-            var stocks = GetStockByQuotation(start, finish, day);
+            var stocks = logical.GetStockByQuotation(start, finish, day);
             foreach (var item in stocks)
             {
                 temp = Convert.ToDecimal(input) / item.Opening;
                 action += temp - (temp * Convert.ToDecimal(broken));
             }
             return action;
+        }
+
+        public decimal TotalEarnings(DateTime start, DateTime finish, DayOfWeek day, float input, float broken)
+        {
+            var actions = GetTotalActionsMath(start, finish, day, input, broken);
+            var lastStock = FileDao.GetStocks().Where(x => x.Date == finish).FirstOrDefault();
+            //var lastStock = FileDao.GetStocks().FirstOrDefault();
+            return actions * lastStock.Closing;
         }
     }
 }

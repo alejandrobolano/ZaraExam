@@ -1,0 +1,17 @@
+ public void Add(Stock stock)
+        {
+            StringBuilder stringStock = new StringBuilder();
+            stringStock.Append(stock.Date.ToShortDateString()).Append("")
+                .Append(Convert.ToString(stock.Opening));
+
+            using (StreamWriter writer = File.AppendText("stocks.txt"))
+            {
+                Write(stringStock.ToString(), writer);
+            }
+
+        }
+
+        void Write(string message, TextWriter w)
+        {
+            w.WriteLine("{0}", message);
+        }
