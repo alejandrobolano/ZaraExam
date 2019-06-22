@@ -21,16 +21,16 @@ namespace ZaraExam.Logical.Tests
         public void LastDayOfMonthTest(int year, int month, DayOfWeek day)
         {
             DateTime expected = Convert.ToDateTime("30/04/2015");
-            DateTime checkDate = stocks.LastDayOfMonthBy(year, month, day);
+            DateTime checkDate = stocks.GetLastDayOfMonthBy(year, month, day);
             bool b = false;
             int count = 0;
             DateTime date;
 
             while(!b)
             {
-                date = stocks.LastDayOfMonthBy(year, month, DayOfWeek.Thursday).AddDays(1);
+                date = stocks.GetLastDayOfMonthBy(year, month, DayOfWeek.Thursday).AddDays(1);
                 if (date == Convert.ToDateTime("28/12/2017") || 
-                    stocks.LastDayOfMonthBy(year, month, DayOfWeek.Thursday) == Convert.ToDateTime("28/12/2017"))
+                    stocks.GetLastDayOfMonthBy(year, month, DayOfWeek.Thursday) == Convert.ToDateTime("28/12/2017"))
                 {
                     b = true;
                 }

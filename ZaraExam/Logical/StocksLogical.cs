@@ -22,7 +22,7 @@ namespace ZaraExam.Logical
         /// <param name="month"></param>
         /// <param name="day"></param>
         /// <returns></returns>
-        public DateTime LastDayOfMonthBy(int year, int month, DayOfWeek day)
+        public DateTime GetLastDayOfMonthBy(int year, int month, DayOfWeek day)
         {
             DateTime lastDay = new DateTime(year, month, DateTime.DaysInMonth(year, month));
             while (lastDay.DayOfWeek != day)
@@ -47,7 +47,6 @@ namespace ZaraExam.Logical
 
         public void Method(DateTime start, DateTime finish, DayOfWeek day)
         {
-
             bool b = false;
             DateTime dateNext;
             int year = start.Year;
@@ -59,9 +58,9 @@ namespace ZaraExam.Logical
 
             while (!b)
             {
-                dateNext = LastDayOfMonthBy(year, month, day).AddDays(1);
+                dateNext = GetLastDayOfMonthBy(year, month, day).AddDays(1);
                 if (dateNext == finish ||
-                    LastDayOfMonthBy(year, month, day) == finish)
+                    GetLastDayOfMonthBy(year, month, day) == finish)
                 {
                     b = true;
                 }
@@ -69,9 +68,9 @@ namespace ZaraExam.Logical
                 bool a = false;
                 while (!a)
                 {
-                    dateNext = LastDayOfMonthBy(year, month, day).AddDays(1);
+                    dateNext = GetLastDayOfMonthBy(year, month, day).AddDays(1);
                     if (dateNext == finish ||
-                        LastDayOfMonthBy(year, month, day) == finish)
+                        GetLastDayOfMonthBy(year, month, day) == finish)
                     {
                         b = true;
                         a = true;
@@ -94,6 +93,51 @@ namespace ZaraExam.Logical
                     year++;
                 }
             }
+        }
+
+        public List<DateTime> GetLastDayOfMonthList(DateTime start, DateTime finish, DayOfWeek day)
+        {
+            var selectedDates = new List<DateTime>();
+            DateTime dateTimeExpected;
+            for (var date = start; date < finish; date = date.AddMonths(1))
+            {
+                dateTimeExpected = GetLastDayOfMonthBy(date.Year, date.Month, DayOfWeek.Thursday);
+                if (dateTimeExpected == finish)
+                {
+                    break;
+                }
+                selectedDates.Add(dateTimeExpected);
+            }
+            return selectedDates;
+        }
+
+        public List<Stock> GetStockByQuotation(DateTime start, DateTime finish, DayOfWeek day)
+        {
+            List<Stock> stocksReduced = new List<Stock>();
+            var stocks = GetStocks(); // Coger del singleton para cargar rapido
+            
+            DateTime dateNext;
+
+            foreach (var item in GetLastDayOfMonthList(start, finish, day))
+            {
+                var stock = new Stock();
+                dateNext = item.AddDays(1);
+                
+                while (true)
+                {                    
+                    stock = stocks.Where(x => x.Date == dateNext).FirstOrDefault();
+                    if (stock != null)
+                    {
+                        stocksReduced.Add(stock);
+                        break;
+                    }
+                    else
+                    {
+                        dateNext = dateNext.AddDays(1);
+                    }
+                }                
+            }
+            return stocksReduced;
         }
 
         public void Add(Stock stock)
