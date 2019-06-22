@@ -35,9 +35,9 @@ namespace ZaraExam.Logical
             foreach (var item in stocks)
             {
                 temp = Convert.ToDecimal(input) / item.Opening;
-                action += temp - (temp * Convert.ToDecimal(broken));
+                action += decimal.Round(temp - (temp * Convert.ToDecimal(broken)), 3);
             }
-            return decimal.Round(action,3);
+            return action;
         }
 
         /// <summary>
