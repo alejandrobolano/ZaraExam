@@ -9,20 +9,20 @@ using ZaraExam.Model;
 
 namespace ZaraExam.Dao
 {
-    class ExcelDao
+    public class FileDao
     {
-        private static ExcelDao instance = null;
+        private static FileDao instance = null;
         private static readonly object padlock = new object();
         private static List<Stock> stocks;
         private StocksLogical logical;
 
-        private ExcelDao()
+        private FileDao()
         {
             logical = new StocksLogical();
             stocks = logical.GetStocks();
         }
 
-        public static ExcelDao Instance
+        public static FileDao Instance
         {
             get
             {
@@ -30,7 +30,7 @@ namespace ZaraExam.Dao
                 {
                     if (instance == null)
                     {
-                        instance = new ExcelDao();
+                        instance = new FileDao();
                     }
                     return instance;
                 }

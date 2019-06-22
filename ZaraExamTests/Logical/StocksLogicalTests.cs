@@ -26,10 +26,10 @@ namespace ZaraExam.Logical.Tests
             int count = 0;
             DateTime date;
 
-            while(!b)
+            while (!b)
             {
                 date = stocks.GetLastDayOfMonthBy(year, month, DayOfWeek.Thursday).AddDays(1);
-                if (date == Convert.ToDateTime("28/12/2017") || 
+                if (date == Convert.ToDateTime("28/12/2017") ||
                     stocks.GetLastDayOfMonthBy(year, month, DayOfWeek.Thursday) == Convert.ToDateTime("28/12/2017"))
                 {
                     b = true;
@@ -37,18 +37,26 @@ namespace ZaraExam.Logical.Tests
                 if (date.DayOfWeek == DayOfWeek.Friday)
                 {
                     count++;
-                }                
+                }
                 month++;
-                if(month == 13)
+                if (month == 13)
                 {
                     month = 1;
                     year++;
                 }
             }
-            Console.Write(count);
             Assert.AreEqual(checkDate, expected);
 
         }
 
+        [TestMethod()]
+        [DataRow("01/05/2001", "28/12/2017", DayOfWeek.Thursday)]
+        public void MathCalculationTest(string start, string finish, DayOfWeek day)
+        {
+            var result = stocks.GetTotalActionsMath(Convert.ToDateTime(start), Convert.ToDateTime(finish),
+                day, 50f, 0.02f);
+            Console.WriteLine(result);
+            Assert.IsTrue(result>0);
+        }
     }
 }

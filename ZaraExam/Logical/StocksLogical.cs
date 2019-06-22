@@ -14,6 +14,11 @@ namespace ZaraExam.Logical
 {
     public class StocksLogical
     {
+        private FileDao file;
+        public StocksLogical()
+        {
+            file = FileDao.Instance;
+        }
         /// <summary>
         /// Obtain last day of month ----------
         /// For this exam is DayOfWeek.Thursday
@@ -82,7 +87,6 @@ namespace ZaraExam.Logical
                         Console.WriteLine(stock.Date.ToShortDateString());
                         Console.WriteLine(Convert.ToString(stock.Opening));
                         a = true;
-                        Add(stock);
                     }
                 }
 
@@ -111,14 +115,22 @@ namespace ZaraExam.Logical
             return selectedDates;
         }
 
+        /// <summary>
+        /// Get all stock that i need for the math formula
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="finish"></param>
+        /// <param name="day"></param>
+        /// <returns></returns>
         public List<Stock> GetStockByQuotation(DateTime start, DateTime finish, DayOfWeek day)
         {
             List<Stock> stocksReduced = new List<Stock>();
-            var stocks = GetStocks(); // Coger del singleton para cargar rapido
-            
-            DateTime dateNext;
+            var stocks = FileDao.GetStocks(); 
 
-            foreach (var item in GetLastDayOfMonthList(start, finish, day))
+            DateTime dateNext;
+            var listLastDays = GetLastDayOfMonthList(start, finish, day);
+
+            foreach (var item in listLastDays)
             {
                 var stock = new Stock();
                 dateNext = item.AddDays(1);
@@ -139,25 +151,5 @@ namespace ZaraExam.Logical
             }
             return stocksReduced;
         }
-
-        public void Add(Stock stock)
-        {
-            StringBuilder stringStock = new StringBuilder();
-            stringStock.Append(stock.Date.ToShortDateString()).Append("")
-                .Append(Convert.ToString(stock.Opening));
-
-            using (StreamWriter writer = File.AppendText("stocks.txt"))
-            {
-                Write(stringStock.ToString(), writer);
-            }
-
-        }
-
-        void Write(string message, TextWriter w)
-        {
-            w.WriteLine("{0}", message);
-        }
-
-
     }
 }
