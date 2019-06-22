@@ -17,13 +17,32 @@ namespace ZaraExam.Logical
         /// <returns></returns>
         public List<Stock> GetStocks()
         {
-            List<string> lines = File.ReadLines(Helper.FILEPATH).ToList();
             List<Stock> stocks = new List<Stock>();
-            lines.RemoveAt(0);
-            foreach (var item in lines)
+            try
             {
-                stocks.Add(Helper.ConvertStringToStock(item));
+                List<string> lines = File.ReadLines(Helper.FILEPATH).ToList();
+                lines.RemoveAt(0);
+                foreach (var item in lines)
+                {
+                    stocks.Add(Helper.ConvertStringToStock(item));
+                }
             }
+            catch (FileLoadException f)
+            {
+                Console.WriteLine(f.Message);
+                throw;
+            }
+            catch(AccessViolationException a)
+            {
+                Console.WriteLine(a.Message);
+                throw;
+            }
+            catch(FileNotFoundException f)
+            {
+                Console.WriteLine(f.Message);
+                throw;
+            }
+            
             return stocks;
         }
     }

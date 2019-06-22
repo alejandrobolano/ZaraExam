@@ -11,24 +11,27 @@ namespace ZaraExam.Visual
 {
     class Program
     {
-        private ResXResourceReader resxReader;
 
         static void Main(string[] args)
         {
             Assembly a = Assembly.Load("ZaraExam");
             ResourceManager rm = new ResourceManager("ZaraExam.Strings", a);
 
-
             Console.WriteLine(rm.GetString("loading"));
+
             //FileDao f = FileDao.Instance;
             //FileDao.GetStocks();
-            Operations operations = new Operations();
-            DateTime start = Convert.ToDateTime("01/05/2001");
-            DateTime finish = Convert.ToDateTime("28/12/2017");
-            DayOfWeek day = DayOfWeek.Thursday;
-            float input = 50f;
-            float broker = 0.02f;
 
+            Operations operations;
+            DateTime start, finish;
+            DayOfWeek day;
+            float input, broker;
+            DataZara(out operations, out start, out finish, out day, out input, out broker);
+            WriteConsoleResult(rm, operations, start, finish, day, input, broker);
+        }
+
+        private static void WriteConsoleResult(ResourceManager rm, Operations operations, DateTime start, DateTime finish, DayOfWeek day, float input, float broker)
+        {
             Console.WriteLine(rm.GetString("date_start") + start.ToShortDateString());
             Console.WriteLine(rm.GetString("date_finish") + finish.ToShortDateString());
             Console.WriteLine();
@@ -37,5 +40,14 @@ namespace ZaraExam.Visual
             Console.ReadKey();
         }
 
+        private static void DataZara(out Operations operations, out DateTime start, out DateTime finish, out DayOfWeek day, out float input, out float broker)
+        {
+            operations = new Operations();
+            start = Convert.ToDateTime("01/05/2001");
+            finish = Convert.ToDateTime("28/12/2017");
+            day = DayOfWeek.Thursday;
+            input = 50f;
+            broker = 0.02f;
+        }
     }
 }
