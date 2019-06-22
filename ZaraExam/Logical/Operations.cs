@@ -29,7 +29,7 @@ namespace ZaraExam.Logical
         private decimal GetTotalActionsMath(DateTime start, DateTime finish, DayOfWeek day, float input, float broken)
         {
             decimal action = 0;
-            decimal temp = 0;
+            decimal temp;    
             
             var stocks = logical.GetStockByQuotation(start, finish, day);
             foreach (var item in stocks)
