@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Reflection;
 using System.Resources;
 using System.Threading;
@@ -11,13 +12,15 @@ namespace ZaraExam.Visual
 {
     class Program
     {
-
+        private static readonly log4net.ILog LOG = log4net.LogManager.GetLogger
+        (MethodBase.GetCurrentMethod().DeclaringType);
+        private static Stopwatch timer;
         static void Main(string[] args)
         {
             Assembly a = Assembly.Load("ZaraExam");
             ResourceManager rm = new ResourceManager("ZaraExam.Strings", a);
-
-            Console.WriteLine(rm.GetString("loading"));
+            timer = Stopwatch.StartNew();
+            LOG.Info(rm.GetString("loading"));
 
             //FileDao f = FileDao.Instance;
             //FileDao.GetStocks();
@@ -27,16 +30,18 @@ namespace ZaraExam.Visual
             DayOfWeek day;
             float input, broker;
             DataZara(out operations, out start, out finish, out day, out input, out broker);
-            WriteConsoleResult(rm, operations, start, finish, day, input, broker);
+            WriteConsoleResult(rm, operations, start, finish, day, input, broker);            
         }
 
         private static void WriteConsoleResult(ResourceManager rm, Operations operations, DateTime start, DateTime finish, DayOfWeek day, float input, float broker)
         {
+
             Console.WriteLine(rm.GetString("date_start") + start.ToShortDateString());
             Console.WriteLine(rm.GetString("date_finish") + finish.ToShortDateString());
             Console.WriteLine();
             Console.WriteLine(rm.GetString("earn_total") +
                 operations.TotalEarnings(start, finish, day, input, broker));
+            LOG.InfoFormat("Application completed in {0}ms", timer.ElapsedMilliseconds);
             Console.ReadKey();
         }
 
@@ -49,5 +54,6 @@ namespace ZaraExam.Visual
             input = 50f;
             broker = 0.02f;
         }
+
     }
 }
