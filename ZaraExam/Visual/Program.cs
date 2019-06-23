@@ -51,16 +51,29 @@ namespace ZaraExam.Visual
             StringBuilder builder = new StringBuilder();
             builder.Append("Fecha").Append(";")
                 .Append("Cierre").Append(";")
-                .Append("Apertura").Append(";");
+                .Append("Apertura").Append(";")
+                .Append("Acciones sin broken").Append(";");
             var path = Helper.FILEFILTERPATH;
             if (File.Exists(path))
                 File.Delete(path);
             FileDao.GetFileX.AddRow(builder.ToString());
+            var lastStock = FileDao.GetStocks.ToArray()[0];
 
             foreach (var item in FileDao.GetStocksLogical.GetStockByQuotation(start, finish, day))
             {
                 FileDao.GetFileX.AddRow(Helper.ConvertStockToString(item));
             }
+            builder = new StringBuilder();
+            builder.Append("Fecha de salida").Append(";");
+            FileDao.GetFileX.AddRow(builder.ToString());
+            FileDao.GetFileX.AddRow(Helper.ConvertStockToString(lastStock));
+            builder = new StringBuilder();
+            builder.Append(";").Append(";").Append("Total").Append(";");
+            FileDao.GetFileX.AddRow(builder.ToString());
+            builder = new StringBuilder();
+            builder.Append(";").Append(";").Append("Venta").Append(";");
+            FileDao.GetFileX.AddRow(builder.ToString());
+
             LOG.Info(rm.GetString("new_file"));
         }
 
