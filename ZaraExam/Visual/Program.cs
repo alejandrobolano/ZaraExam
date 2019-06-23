@@ -43,7 +43,6 @@ namespace ZaraExam.Visual
             }
             LOG.WarnFormat("Application completed in {0}ms", timer.ElapsedMilliseconds);
             Console.ReadKey();
-
         }
 
         private static void ManualOperation(ResourceManager rm, DateTime start, DateTime finish, DayOfWeek day)
