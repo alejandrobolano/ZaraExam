@@ -13,12 +13,16 @@ namespace ZaraExam.Dao
         private static FileDao instance = null;
         private static readonly object padlock = new object();
         private static List<Stock> stocks;
-        private FileX file;
+        private static FileX file;
+        private static Operations operations;
+        private static StocksLogical logical;
 
         private FileDao()
         {
             file = new FileX();
             stocks = file.GetStocks();
+            operations = new Operations();
+            logical = new StocksLogical();
         }
 
         public static FileDao Instance
@@ -36,10 +40,12 @@ namespace ZaraExam.Dao
             }
         }
 
-        public static List<Stock> GetStocks()
-        {
-            return stocks;
-        }
+        public static FileX GetFileX => file;
 
+        public static Operations GetOperations => operations;
+
+        public static StocksLogical GetStocksLogical => logical;
+
+        public static List<Stock> GetStocks => stocks;
     }
 }

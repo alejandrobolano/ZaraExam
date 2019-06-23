@@ -13,10 +13,9 @@ namespace ZaraExam.Logical
 {
     public class StocksLogical
     {
-        private FileDao file;
+        
         public StocksLogical()
         {
-            file = FileDao.Instance;
         }
 
         /// <summary>
@@ -68,7 +67,7 @@ namespace ZaraExam.Logical
         public List<Stock> GetStockByQuotation(DateTime start, DateTime finish, DayOfWeek day)
         {
             List<Stock> stocksReduced = new List<Stock>();
-            var stocks = FileDao.GetStocks();
+            var stocks = FileDao.GetStocks;
             DateTime dateNext;
             var listLastDays = GetLastDayOfMonthList(start, finish, day);
             foreach (var item in listLastDays)

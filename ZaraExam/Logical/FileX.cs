@@ -11,7 +11,7 @@ using ZaraExam.Util;
 
 namespace ZaraExam.Logical
 {
-    class FileX
+    public class FileX
     {
         private static readonly log4net.ILog LOG = log4net.LogManager.GetLogger
         (MethodBase.GetCurrentMethod().DeclaringType);
@@ -38,16 +38,42 @@ namespace ZaraExam.Logical
                 {
                     stocks.Add(Helper.ConvertStringToStock(item));
                 }
-                LOG.Info(rm.GetString("file_succesfull"));
+                LOG.Info(rm.GetString("stock_in_memory"));
             }
             catch (FileLoadException f)
             {
                 LOG.Error(f.Message);
                 throw;
             }
-            catch(AccessViolationException a)
+            catch (AccessViolationException a)
             {
                 LOG.Error(a.Message);
+                throw;
+            }
+            catch (FileNotFoundException f)
+            {
+                LOG.Error(f.Message);
+                throw;
+            }
+
+            return stocks;
+        }
+
+        public bool AddRow(string row)
+        {
+            bool b = false;
+            var path = Helper.FILEFILTERPATH;
+            try
+            {
+                using (StreamWriter writer = File.AppendText(path))
+                {
+                    writer.WriteLine(row);
+                    b = true;
+                }
+            }
+            catch (FileLoadException f)
+            {
+                LOG.Error(f.Message);
                 throw;
             }
             catch(FileNotFoundException f)
@@ -55,8 +81,12 @@ namespace ZaraExam.Logical
                 LOG.Error(f.Message);
                 throw;
             }
-            
-            return stocks;
+            catch(ArgumentNullException a)
+            {
+                LOG.Error(a.Message);
+            }
+            return b;
         }
+
     }
 }

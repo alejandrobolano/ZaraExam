@@ -12,6 +12,7 @@ namespace ZaraExam.Util
     class Helper
     {
         public static string FILEPATH = ConfigurationManager.AppSettings.Get("File");
+        public static string FILEFILTERPATH = ConfigurationManager.AppSettings.Get("FileFiltered");
 
         public static Stock ConvertStringToStock(string stream)
         {
@@ -22,6 +23,16 @@ namespace ZaraExam.Util
             stock.Opening = Decimal.Parse(streamList[2], CultureInfo.CreateSpecificCulture("es-US"));
 
             return stock;
+        }
+
+        public static string ConvertStockToString(Stock stock)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(stock.Date.ToShortDateString())
+                .Append(";").Append(stock.Closing.ToString())
+                .Append(";").Append(stock.Opening.ToString());
+
+            return stringBuilder.ToString();
         }
     }
 }

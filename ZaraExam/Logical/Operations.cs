@@ -9,12 +9,10 @@ namespace ZaraExam.Logical
 {
     public class Operations
     {
-        StocksLogical logical;
-        FileDao file;
+        
         public Operations()
         {
-            logical = new StocksLogical();
-            file = FileDao.Instance;
+
         }
 
         /// <summary>
@@ -31,7 +29,7 @@ namespace ZaraExam.Logical
             decimal action = 0;
             decimal temp;    
             
-            var stocks = logical.GetStockByQuotation(start, finish, day);
+            var stocks = FileDao.GetStocksLogical.GetStockByQuotation(start, finish, day);
             foreach (var item in stocks)
             {
                 temp = Convert.ToDecimal(input) / item.Opening;
@@ -52,7 +50,7 @@ namespace ZaraExam.Logical
         public decimal TotalEarnings(DateTime start, DateTime finish, DayOfWeek day, float input, float broken)
         {
             var actions = GetTotalActionsMath(start, finish, day, input, broken);
-            var lastStock = FileDao.GetStocks().Where(x => x.Date == finish).FirstOrDefault();
+            var lastStock = FileDao.GetStocks.Where(x => x.Date == finish).FirstOrDefault();
             return decimal.Round(actions * lastStock.Closing,3);
         }
     }

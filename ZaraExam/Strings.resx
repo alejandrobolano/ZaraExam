@@ -135,4 +135,13 @@
   <data name="loading" xml:space="preserve">
     <value>Loading...</value>
   </data>
+  <data name="new_file" xml:space="preserve">
+    <value>New file created succesfull</value>
+  </data>
+  <data name="stock_in_memory" xml:space="preserve">
+    <value>Stocks in memory</value>
+  </data>
+  <data name="type_operation" xml:space="preserve">
+    <value>Operation: (1) Manual (2) Automatic</value>
+  </data>
 </root>

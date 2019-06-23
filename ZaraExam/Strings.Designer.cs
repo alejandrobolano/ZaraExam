@@ -113,5 +113,32 @@ namespace ZaraExam {
                 return ResourceManager.GetString("loading", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a New file created succesfull.
+        /// </summary>
+        internal static string new_file {
+            get {
+                return ResourceManager.GetString("new_file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Stocks in memory.
+        /// </summary>
+        internal static string stock_in_memory {
+            get {
+                return ResourceManager.GetString("stock_in_memory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Operation: (1) Manual (2) Automatic.
+        /// </summary>
+        internal static string type_operation {
+            get {
+                return ResourceManager.GetString("type_operation", resourceCulture);
+            }
+        }
     }
 }
