@@ -5,16 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZaraExam.Dao;
 
 namespace ZaraExam.Logical.Tests
 {
     [TestClass()]
     public class OperationsTests
     {
+        FileDao fileDao;
         Operations operations;
         public OperationsTests()
         {
-            operations = new Operations();
+            fileDao = FileDao.Instance;
+            operations = FileDao.GetOperations;
         }
 
         [TestMethod()]

@@ -41,7 +41,7 @@ namespace ZaraExam.Logical
         /// <param name="finish"></param>
         /// <param name="day"></param>
         /// <returns></returns>
-        public List<DateTime> GetLastDayOfMonthList(DateTime start, DateTime finish, DayOfWeek day)
+        private List<DateTime> GetLastDayOfMonthList(DateTime start, DateTime finish, DayOfWeek day)
         {
             var selectedDates = new List<DateTime>();
             DateTime dateTimeExpected;
