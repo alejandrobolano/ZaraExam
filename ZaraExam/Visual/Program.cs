@@ -20,38 +20,44 @@ namespace ZaraExam.Visual
         static void Main(string[] args)
         {
             Assembly a = Assembly.Load("ZaraExam");
-            ResourceManager rm = new ResourceManager("ZaraExam.Strings", a);
+            ResourceManager resourceManager = new ResourceManager("ZaraExam.Strings", a);
             timer = Stopwatch.StartNew();
 
-            LOG.Info(rm.GetString("loading"));
-            FileDao f = FileDao.Instance;
+            //ThreadStart threadStart = delegate { LoadInstance(rm); };
+            //Thread thread = new Thread(threadStart);
+            //thread.Start();
+            
+            LoadInstance(resourceManager);
 
-            DateTime start, finish;
+            DateTime dateStart, dateFinish;
             DayOfWeek day;
             float input, broker;
-            DataZara(out start, out finish, out day, out input, out broker);
+            DataZara(out dateStart, out dateFinish, out day, out input, out broker);
 
-            Console.WriteLine(rm.GetString("type_operation"));
+            Console.WriteLine(resourceManager.GetString("type_operation"));
             int operation = Convert.ToInt32(Console.ReadLine());
             if (operation == 1)
             {
-                ManualOperation(rm, start, finish, day);
+                ManualOperation(resourceManager, dateStart, dateFinish, day);
             }
             else
             {
-                WriteConsoleResult(rm, start, finish, day, input, broker);
+                WriteConsoleResult(resourceManager, dateStart, dateFinish, day, input, broker);
             }
             LOG.WarnFormat("Application completed in {0}ms", timer.ElapsedMilliseconds);
             Console.ReadKey();
         }
 
+        private static void LoadInstance(ResourceManager rm)
+        {
+            LOG.Info(rm.GetString("loading"));
+            FileDao f = FileDao.Instance;
+        }
+
         private static void ManualOperation(ResourceManager rm, DateTime start, DateTime finish, DayOfWeek day)
         {
             StringBuilder builder = new StringBuilder();
-            builder.Append("Fecha").Append(";")
-                .Append("Cierre").Append(";")
-                .Append("Apertura").Append(";")
-                .Append("Acciones sin broken").Append(";");
+            AppendFirstRow(builder);
             var path = Helper.FILEFILTERPATH;
             if (File.Exists(path))
                 File.Delete(path);
@@ -62,7 +68,13 @@ namespace ZaraExam.Visual
             {
                 FileDao.GetFileX.AddRow(Helper.ConvertStockToString(item));
             }
-            builder = new StringBuilder();
+            builder = AppendLastRows(lastStock);
+            LOG.Info(rm.GetString("new_file"));
+        }
+
+        private static StringBuilder AppendLastRows(Model.Stock lastStock)
+        {
+            StringBuilder builder = new StringBuilder();
             builder.Append("Fecha de salida").Append(";");
             FileDao.GetFileX.AddRow(builder.ToString());
             FileDao.GetFileX.AddRow(Helper.ConvertStockToString(lastStock));
@@ -72,8 +84,15 @@ namespace ZaraExam.Visual
             builder = new StringBuilder();
             builder.Append(";").Append(";").Append("Venta").Append(";");
             FileDao.GetFileX.AddRow(builder.ToString());
+            return builder;
+        }
 
-            LOG.Info(rm.GetString("new_file"));
+        private static void AppendFirstRow(StringBuilder builder)
+        {
+            builder.Append("Fecha").Append(";")
+                            .Append("Cierre").Append(";")
+                            .Append("Apertura").Append(";")
+                            .Append("Acciones sin broken").Append(";");
         }
 
         private static void WriteConsoleResult(ResourceManager rm, DateTime start, DateTime finish, DayOfWeek day, float input, float broker)

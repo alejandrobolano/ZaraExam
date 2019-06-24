@@ -61,14 +61,14 @@ namespace ZaraExam.Logical
 
         public bool AddRow(string row)
         {
-            bool b = false;
+            bool isAdd = false;
             var path = Helper.FILEFILTERPATH;
             try
             {
                 using (StreamWriter writer = File.AppendText(path))
                 {
                     writer.WriteLine(row);
-                    b = true;
+                    isAdd = true;
                 }
             }
             catch (FileLoadException f)
@@ -85,7 +85,7 @@ namespace ZaraExam.Logical
             {
                 LOG.Error(a.Message);
             }
-            return b;
+            return isAdd;
         }
 
     }

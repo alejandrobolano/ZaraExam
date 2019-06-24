@@ -37,18 +37,18 @@ namespace ZaraExam.Logical
         /// <summary>
         /// GetLastDayOfMonthList
         /// </summary>
-        /// <param name="start"></param>
-        /// <param name="finish"></param>
-        /// <param name="day"></param>
+        /// <param name="dateStart"></param>
+        /// <param name="dateFinish"></param>
+        /// <param name="dayOfWeek"></param>
         /// <returns></returns>
-        private List<DateTime> GetLastDayOfMonthList(DateTime start, DateTime finish, DayOfWeek day)
+        private List<DateTime> GetLastDayOfMonthList(DateTime dateStart, DateTime dateFinish, DayOfWeek dayOfWeek)
         {
             var selectedDates = new List<DateTime>();
             DateTime dateTimeExpected;
-            for (var date = start; date < finish; date = date.AddMonths(1))
+            for (var date = dateStart; date < dateFinish; date = date.AddMonths(1))
             {
                 dateTimeExpected = GetLastDayOfMonthBy(date.Year, date.Month, DayOfWeek.Thursday);
-                if (dateTimeExpected == finish)
+                if (dateTimeExpected == dateFinish)
                 {
                     break;
                 }
@@ -70,10 +70,10 @@ namespace ZaraExam.Logical
             var stocks = FileDao.GetStocks;
             DateTime dateNext;
             var listLastDays = GetLastDayOfMonthList(start, finish, day);
-            foreach (var item in listLastDays)
+            foreach (var date in listLastDays)
             {
                 var stock = new Stock();
-                dateNext = item.AddDays(1);
+                dateNext = date.AddDays(1);
                 while (true)
                 {
                     stock = stocks.Where(x => x.Date == dateNext).FirstOrDefault();
