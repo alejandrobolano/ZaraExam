@@ -32,7 +32,7 @@ namespace ZaraExam.Logical
             List<Stock> stocks = new List<Stock>();
             try
             {
-                List<string> lines = File.ReadLines(Helper.FILEPATH).ToList();
+                List<string> lines = File.ReadAllLines(Helper.FILEPATH).ToList();
                 lines.RemoveAt(0);
                 foreach (var item in lines)
                 {
