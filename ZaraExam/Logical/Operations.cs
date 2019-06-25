@@ -24,7 +24,7 @@ namespace ZaraExam.Logical
         /// <param name="input"></param>
         /// <param name="broken"></param>
         /// <returns></returns>
-        private decimal GetTotalActionsMath(DateTime start, DateTime finish, DayOfWeek day, float input, float broken)
+        public decimal GetTotalActionsMath(DateTime start, DateTime finish, DayOfWeek day, float input, float broken)
         {
             decimal action = 0;
             decimal temp;    

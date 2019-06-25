@@ -63,7 +63,7 @@ namespace ZaraExam.Logical
         /// <param name="start"></param>
         /// <param name="finish"></param>
         /// <param name="day"></param>
-        /// <returns></returns>
+        /// <returns>List of Stocks</returns>
         public List<Stock> GetStockByQuotation(DateTime start, DateTime finish, DayOfWeek day)
         {
             List<Stock> stocksReduced = new List<Stock>();
